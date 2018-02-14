@@ -48,9 +48,15 @@ app.get("/imagasearch/:img",function(req, res, next){
         var body = Buffer.concat(bodyChunks); 
         var responseData = JSON.parse(body.toString());
         var data = typeof responseData !== 'undefined' ? responseData.data : [];
+        var collection = [];
+        /*data = data.forEach(function(item){
+          item.forEach(function(nItem){
+            collection.push(nItem)
+          })
+        })*/
         
         if(offset && data.length > 0) {
-          data = data.slice(0, offset)
+          collection = collection.slice(0, offset)
         }
         res.json(data);
       })
