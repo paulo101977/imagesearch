@@ -19,15 +19,16 @@ app.get("/", function (request, response) {
 });
 
 //https://api.imgur.com/3/gallery/search/?q=cats
-var options = {
-  host: 'api.imgur.com',
-  path: '/3/gallery/search/',
-  headers : {'Authorization':  config.authorization},
-};
+
 
 app.get("/imagasearch/:img",function(req, res, next){
   let img = req.params.img;
   let offset = +req.query.offset;
+  var options = {
+    host: 'api.imgur.com',
+    path: '/3/gallery/search/',
+    headers : {'Authorization':  config.authorization},
+  };
   
   if(img){
     options.path += '?q=' + img; 
