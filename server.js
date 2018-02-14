@@ -49,16 +49,22 @@ app.get("/imagasearch/:img",function(req, res, next){
         var responseData = JSON.parse(body.toString());
         var data = typeof responseData !== 'undefined' ? responseData.data : [];
         var collection = [];
-        /*data = data.forEach(function(item){
-          item.forEach(function(nItem){
-            collection.push(nItem)
-          })
-        })*/
+        data.forEach(function(item){
+          if(item.is_album){
+            item.images.forEach(function(nItem){
+              collection.push(nItem)
+            })
+          }
+        })
         
-        if(offset && data.length > 0) {
+        if(offset && collection.length > 0) {
           collection = collection.slice(0, offset)
         }
-        res.json(data);
+        
+        //shuffle
+        collection.sort(function() { return 0.5 - Math.random() })
+        
+        res.json(collection);
       })
       
     })
