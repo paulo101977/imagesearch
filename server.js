@@ -34,7 +34,7 @@ app.get("/imagasearch/:img",function(req, res, next){
     //res.json({img: img})
     options.path += '?q=' + img; 
 
-    http.get(options, function(resource) {
+    let request = http.get(options, function(resource) {
       //res.json({resource: resource})
       
       console.log('config.authorization',config.authorization);
@@ -47,14 +47,18 @@ app.get("/imagasearch/:img",function(req, res, next){
         // You can process streamed parts here...
         bodyChunks.push(chunk);
       }).on('end', function() {
-        var body = Buffer.concat(bodyChunks);
-        console.log('BODY: ' + body);
-        // ...and/or process the entire body here.
-        res.json({response: body})
+ 
+
+        resource.write(bodyChunks, "utf8");
+        resource.end(); 
       })
+      request.on('error', (e) => {
+        console.error(e);
+      });
+      request.end();
     })
   }
-  next();
+  
 })
 
 // listen for requests :)
