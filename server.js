@@ -4,8 +4,8 @@
 // init project
 var express = require('express');
 var app = express();
-var config = require('./config');
-var http = require('http');
+var config = require('./config.js');
+var http = require('https');
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -21,7 +21,8 @@ app.get("/", function (request, response) {
 //https://api.imgur.com/3/gallery/search/?q=cats
 var options = {
   host: 'api.imgur.com',
-  path: '/index.html'
+  path: '/3/gallery/search/',
+  headers : {'Authorization':  config.authorization},
 };
 
 app.get("/imagasearch/:img",function(req, res, next){
@@ -36,6 +37,7 @@ app.get("/imagasearch/:img",function(req, res, next){
     http.get(options, function(resource) {
       //res.json({resource: resource})
       
+      console.log('config.authorization',config.authorization);
       console.log('STATUS: ' + res.statusCode);
       console.log('HEADERS: ' + JSON.stringify(res.headers));
 
@@ -48,7 +50,7 @@ app.get("/imagasearch/:img",function(req, res, next){
         var body = Buffer.concat(bodyChunks);
         console.log('BODY: ' + body);
         // ...and/or process the entire body here.
-        res.j
+        res.json({response: body})
       })
     })
   }
