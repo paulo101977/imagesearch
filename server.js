@@ -34,7 +34,7 @@ app.get("/imagasearch/:img",function(req, res, next){
     //res.json({img: img})
     options.path += '?q=' + img; 
     
-    if(offset) options.path += '&perPage=' + offset
+    //if(offset) options.path += '&perPage=' + offset
     
     var bodyChunks = [];
 
@@ -49,6 +49,7 @@ app.get("/imagasearch/:img",function(req, res, next){
         bodyChunks.push(chunk);
       }).on('end', function() {
         var body = Buffer.concat(bodyChunks); 
+        v
         res.json(JSON.parse(body.toString()));
       })
       
