@@ -33,6 +33,8 @@ app.get("/imagasearch/:img",function(req, res, next){
     //http.get();
     //res.json({img: img})
     options.path += '?q=' + img; 
+    
+    var bodyChunks = [];
 
     let request = http.get(options, function(resource) {
       //res.json({resource: resource})
@@ -41,24 +43,17 @@ app.get("/imagasearch/:img",function(req, res, next){
       console.log('STATUS: ' + res.statusCode);
       console.log('HEADERS: ' + JSON.stringify(res.headers));
 
-      // Buffer the body entirely for processing as a whole.
-      var bodyChunks = [];
       resource.on('data', function(chunk) {
-        // You can process streamed parts here...
         bodyChunks.push(chunk);
       }).on('end', function() {
- 
-
-        resource.write(bodyChunks, "utf8");
-        resource.end(); 
+        var body = Buffer.concat(bodyChunks); 
+        res.json({response: body.toString('utf8')});
       })
-      request.on('error', (e) => {
-        console.error(e);
-      });
-      request.end();
+      
     })
+    request.end();
   }
-  
+  //next();
 })
 
 // listen for requests :)
