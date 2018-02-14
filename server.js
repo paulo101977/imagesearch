@@ -27,14 +27,11 @@ var options = {
 
 app.get("/imagasearch/:img",function(req, res, next){
   let img = req.params.img;
-  let offset = req.params.offset;
-  console.log(req.params.img)
+  let offset = +req.query.offset;
+  
   if(img){
-    //http.get();
-    //res.json({img: img})
     options.path += '?q=' + img; 
-    
-    //if(offset) options.path += '&perPage=' + offset
+  
     
     var bodyChunks = [];
 
@@ -53,12 +50,17 @@ app.get("/imagasearch/:img",function(req, res, next){
         var data = typeof responseData !== 'undefined' ? responseData.data : [];
         
         if(offset && data.length > 0) {
-          offset = +offset; //to number
-          data.slice()
+          data = data.slice(0, offset)
         }
-        res.json(JSON.parse(body.toString()));
+        res.json(data);
       })
       
+    })
+    
+    console.log('offset', offset)
+    
+    request.on('error', function(error){
+      console.log(error);
     })
     request.end();
   }
