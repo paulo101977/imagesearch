@@ -49,7 +49,13 @@ app.get("/imagasearch/:img",function(req, res, next){
         bodyChunks.push(chunk);
       }).on('end', function() {
         var body = Buffer.concat(bodyChunks); 
-        v
+        var responseData = JSON.parse(body.toString());
+        var data = typeof responseData !== 'undefined' ? responseData.data : [];
+        
+        if(offset && data.length > 0) {
+          offset = +offset; //to number
+          data.slice()
+        }
         res.json(JSON.parse(body.toString()));
       })
       
