@@ -69,17 +69,19 @@ app.get("/imagasearch/:img",function(req, res, next){
         //shuffle
         collection.sort(function() { return 0.5 - Math.random() })
         
-        Recents.find({ 'recents': img })
-          .limit(10)
-          .sort({ date: -1 })
-          .select({ name: 1, occupation: 1 })
-          .cursor()
-          .on('data', function(doc) {
-            console.log(doc)
+        console.log('before find')
+        
+        Recents.find({ 'recents': img },
+          function (err, results) {
+              if (err) {  console.log(err) }
+              if (!results.length) {
+                  console.log('new')
+                  new Recents({recents:img})
+              }
+              else{
+                  console.log('exits')
+              }
           })
-          .on('close', function() {
-            // Called when done
-          });
         
         res.json(collection);
       })

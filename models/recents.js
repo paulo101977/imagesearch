@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var Recents = new Schema({
+var RecentsSchema = new Schema({
   searched:  String,
   date: { type: Date, default: Date.now }
 });
 
 
-var Recents = mongoose.model('Recents', Recents);
+var Recents = mongoose.model('Recents', RecentsSchema);
 
 module.exports = Recents;
