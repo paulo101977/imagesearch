@@ -8,8 +8,6 @@ var config = require('./config.js');
 var http = require('https');
 var mongoose = require('mongoose');
 
-//use mongoose
-var connect = require('./mongoose.js');
 
 console.log('connect', connect)
 
@@ -97,7 +95,13 @@ connect()
 
 
 
-// listen for requests :)
-var listen = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listen.address().port);
-});
+
+function listen () {
+  app.listen(process.env.PORT);
+  console.log('Express app started on port ' + process.env.PORT);
+}
+
+function connect () {
+  var options = { server: { socketOptions: { keepAlive: 1 } } };
+  return mongoose.connect(config.uri, options).connection;
+}
