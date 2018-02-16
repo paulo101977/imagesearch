@@ -11,6 +11,8 @@ var mongoose = require('mongoose');
 //use mongoose
 var connect = require('./mongoose.js');
 
+console.log('connect', connect)
+
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
@@ -87,18 +89,15 @@ connect()
   .on('disconnected', connect)
   .once('open', listen);
 
-function listen () {
+/*function listen () {
   if (app.get('env') === 'test') return;
   app.listen(port);
   console.log('Express app started on port ' + port);
-}
+}*/
 
-function connect () {
-  var options = { server: { socketOptions: { keepAlive: 1 } } };
-  return mongoose.connect(config.db, options).connection;
-}
+
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
+var listen = app.listen(process.env.PORT, function () {
+  console.log('Your app is listening on port ' + listen.address().port);
 });
