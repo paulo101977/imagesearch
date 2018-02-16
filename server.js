@@ -71,7 +71,9 @@ app.get("/imagasearch/:img",function(req, res, next){
         
         console.log('before find')
         
-        Recents.find({ 'recents': img },
+        Recents.update({_id: null},{ 'recents': img }, {upsert: true, setDefaultsOnInsert: true}, function (err) { console.log(err) });
+        
+        /*Recents.find({ 'recents': img },
           function (err, results) {
               if (err) {  console.log(err) }
               if (!results.length) {
@@ -81,7 +83,7 @@ app.get("/imagasearch/:img",function(req, res, next){
               else{
                   console.log('exits')
               }
-          })
+          })*/
         
         res.json(collection);
       })
