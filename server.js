@@ -6,6 +6,10 @@ var express = require('express');
 var app = express();
 var config = require('./config.js');
 var http = require('https');
+var mongoose = require('mongoose');
+
+//use mongoose
+var connect = require('./mongoose.js');
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -19,8 +23,6 @@ app.get("/", function (request, response) {
 });
 
 //https://api.imgur.com/3/gallery/search/?q=cats
-
-
 app.get("/imagasearch/:img",function(req, res, next){
   let img = req.params.img;
   let offset = +req.query.offset;
@@ -79,6 +81,22 @@ app.get("/imagasearch/:img",function(req, res, next){
   }
   //next();
 })
+
+connect()
+  .on('error', console.log)
+  .on('disconnected', connect)
+  .once('open', listen);
+
+function listen () {
+  if (app.get('env') === 'test') return;
+  app.listen(port);
+  console.log('Express app started on port ' + port);
+}
+
+function connect () {
+  var options = { server: { socketOptions: { keepAlive: 1 } } };
+  return mongoose.connect(config.db, options).connection;
+}
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
