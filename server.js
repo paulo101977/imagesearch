@@ -9,7 +9,9 @@ var http = require('https');
 var mongoose = require('mongoose');
 
 
-console.log('connect', connect)
+//Schemas
+var Recents = require('./models/recents.js');
+
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -82,17 +84,12 @@ app.get("/imagasearch/:img",function(req, res, next){
   //next();
 })
 
+
+//mongoose connect
 connect()
   .on('error', console.log)
   .on('disconnected', connect)
   .once('open', listen);
-
-/*function listen () {
-  if (app.get('env') === 'test') return;
-  app.listen(port);
-  console.log('Express app started on port ' + port);
-}*/
-
 
 
 
@@ -103,5 +100,5 @@ function listen () {
 
 function connect () {
   var options = { server: { socketOptions: { keepAlive: 1 } } };
-  return mongoose.connect(config.uri, options).connection;
+  return mongoose.createConnection(config.uri, options);
 }
