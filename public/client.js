@@ -22,6 +22,9 @@ $(function() {
   /*$.get('/imagasearch/cats?offset=10', function(objs) {
     fill(objs);
   });*/
+  
+  /* test modal */
+  $('#loading').modal('show')
 
   $('form').submit(function(event) {
     event.preventDefault();
@@ -38,12 +41,17 @@ $(function() {
       alert( "error" );
     })
     .always(function() {
-      alert( "finished" );
+      //alert( "finished" );
     });
     
     $('img').on('load', function() {
       // do whatever you want
-      alert('finish')
+      alert('finish img')
+    });
+    
+    $(window).load(function() {
+      // this will fire after the entire page is loaded, including images
+      console.log('loaded all images')
     });
   });
 
