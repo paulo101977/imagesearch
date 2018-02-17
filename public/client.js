@@ -20,10 +20,12 @@ function fill(objs){
 function imageLoaded() {
    // function to invoke for loaded image
    // decrement the counter
+    console.error("call imageLoaded")
    counter--; 
    if( counter === 0 ) {
        // counter is 0 which means the last
        //    one loaded, so do something else
+     console.error("all loaded")
    }
 }
 
@@ -44,7 +46,18 @@ function search(query){
     })
     .always(function() {
       //alert( "finished" );
-      $("img").on("load")
+      
+      var images = $("img.img-fluid");
+      
+      console.log('img',images)
+      
+      images.each(function() {
+        if( this.complete ) {
+            imageLoaded.call( this );
+        } else {
+            $(this).one('load', imageLoaded);
+        }
+      });
     }); 
 }
 
