@@ -25,7 +25,15 @@ app.get("/", function (request, response) {
 });
 
 app.get("/recents",function(req, res, next){
-  
+  var Rec = Recents(db);
+        
+  Rec.find({}, function(err, docs) {
+    // At this point the jobs collection is created.
+    console.log(err, docs);
+    if(err) next();
+    
+    res.json(docs);
+  }).sort({'date': 1}).limit(3);
 })
 
 //https://api.imgur.com/3/gallery/search/?q=cats

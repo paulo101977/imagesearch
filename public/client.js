@@ -16,8 +16,35 @@ function fill(objs){
     });
 }
 
+function search(query){
+   //https://nostalgic-apparatus.glitch.me/imagasearch/cats
+    $.get('/imagasearch/' + query + '?offset=10', function(objs) {
+      $('#loading').modal('show')
+      fill(objs);
+      $('#result-list').empty();
+    })
+    .done(function() {
+      //alert( "second success" );
+    })
+    .fail(function() {
+      $('#loading').modal('hide')
+      
+    })
+    .always(function() {
+      //alert( "finished" );
+      
+    }); 
+}
+
 $(function() {
   console.log('hello world :o');
+  
+  $.get('/recents/', function(objs) {
+      console.log(objs)
+      objs.forEach(function(item){
+        $('<a class="list-group-item list-group-item-action">' + item.searched + '</a>').appendTo("#result-list")
+      })
+  })
   
   function imageLoaded() {
      // function to invoke for loaded image
@@ -45,22 +72,7 @@ $(function() {
     var query = $('input').val();
     
     //https://nostalgic-apparatus.glitch.me/imagasearch/cats
-    $.get('/imagasearch/' + query + '?offset=10', function(objs) {
-      $('#loading').modal('show')
-      fill(objs);
-      $('#result-list').empty();
-    })
-    .done(function() {
-      //alert( "second success" );
-    })
-    .fail(function() {
-      $('#loading').modal('hide')
-      $('<li class="list-group-item"><span class="text-danger">' + query + ' fail at loading images!</span></li>').appendTo("#result-list")
-    })
-    .always(function() {
-      //alert( "finished" );
-      $('<li class="list-group-item">' + query + '</li>').appendTo("#result-list")
-    });
+    search(quer
     
     
   });
