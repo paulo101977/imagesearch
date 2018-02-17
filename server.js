@@ -33,7 +33,7 @@ app.get("/recents",function(req, res, next){
     if(err) next();
     
     res.json(docs);
-  }).sort({'date': 1}).limit(3);
+  }).sort({'date': -1}).limit(3);
 })
 
 //https://api.imgur.com/3/gallery/search/?q=cats

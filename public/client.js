@@ -21,7 +21,7 @@ function search(query){
     $.get('/imagasearch/' + query + '?offset=10', function(objs) {
       $('#loading').modal('show')
       fill(objs);
-      $('#result-list').empty();
+      //$('#result-list').empty();
     })
     .done(function() {
       //alert( "second success" );
@@ -36,13 +36,17 @@ function search(query){
     }); 
 }
 
+function makeSearch(query){
+  search(query)
+}
+
 $(function() {
   console.log('hello world :o');
   
   $.get('/recents/', function(objs) {
       console.log(objs)
       objs.forEach(function(item){
-        $('<a class="list-group-item list-group-item-action">' + item.searched + '</a>').appendTo("#result-list")
+        $('<a onClick="makeSearch(\'' + item.searched  + '\')" class="list-group-item list-group-item-action">' + item.searched + '</a>').appendTo("#result-list")
       })
   })
   
@@ -72,8 +76,7 @@ $(function() {
     var query = $('input').val();
     
     //https://nostalgic-apparatus.glitch.me/imagasearch/cats
-    search(quer
-    
+    search(query)
     
   });
 
