@@ -115,6 +115,6 @@ function listen () {
 }
 
 function connect () {
-  var options = { server: { socketOptions: { keepAlive: 1 } } };
+  var options = { useMongoClient: true, keepAlive: 1 };
   return mongoose.createConnection(config.uri, options);
 }
