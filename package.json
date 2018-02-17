@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "express": "^4.16.2",
-    "mongoose": "*"
+    "mongoose": "*",
+    "body-parser": "*",
+    "express-sanitize-escape": "*"
   },
   "engines": {
     "node": "8.x"

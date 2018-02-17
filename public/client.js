@@ -34,6 +34,7 @@ $(function() {
     $.get('/imagasearch/' + query + '?offset=10', function(objs) {
       $('#loading').modal('show')
       fill(objs);
+      $('#result-list').empty();
     })
     .done(function() {
       //alert( "second success" );
