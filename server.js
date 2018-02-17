@@ -72,9 +72,14 @@ app.get("/imagasearch/:img",function(req, res, next){
         var query = { 'searched': img },
             update = { 'searched': img , date: new Date() },
             options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        
+        
+        var doc = new Recents({searched:img})
+        
+        console.log('doc', doc);
 
         
-        console.log('before find')
+        console.log('before find', Recents)
         
         //Recents.update({ 'searched': img }, {upsert: true}, function (err) { console.log(err) });
         
@@ -87,13 +92,8 @@ app.get("/imagasearch/:img",function(req, res, next){
         Recents.find({},
           function (err, results) {
               if (err) {  console.log(err) }
-              if (!results.length) {
-                  console.log('new')
-                  new Recents({searched:img})
-              }
-              else{
-                  console.log('exits')
-              }
+              console.log('exits')
+              
           })
         
         res.json(collection);
