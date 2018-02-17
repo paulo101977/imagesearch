@@ -7,9 +7,10 @@
 $(function() {
   console.log('hello world :o');
   
-  $.get('/imagasearch/cats?offset=10', function(dreams) {
-    dreams.forEach(function(dream) {
-      $('<li></li>').text(dream).appendTo('ul#dreams');
+  $.get('/imagasearch/cats?offset=10', function(objs) {
+    objs.forEach(function(obj) {
+      console.log('object',obj.link)
+      $('<img src="' + obj.link + '"/>').appendTo('ul#dreams');
     });
   });
 
