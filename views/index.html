@@ -44,17 +44,30 @@
             </div>
             
             <div class="col">
-              
+              <form>
+                <div class="form-group">
+                  <label>Recent searchs: </label>
+                  
+                </div>
+              </form>
             </div>
           </div>
           
-          <!-- res
+          <!-- result -->
+          <!-- render objects -->
+          <div class="row row-eq-height align-items-start" id="results"></div>
         </div>
       </div>
     
-      
-      <!-- render objects -->
-      <div class="row row-eq-height align-items-start" id="results"></div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="loading" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          
+        </div>
+      </div>
     </div>
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"

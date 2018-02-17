@@ -19,9 +19,9 @@ function fill(objs){
 $(function() {
   console.log('hello world :o');
   
-  $.get('/imagasearch/cats?offset=10', function(objs) {
+  /*$.get('/imagasearch/cats?offset=10', function(objs) {
     fill(objs);
-  });
+  });*/
 
   $('form').submit(function(event) {
     event.preventDefault();
@@ -30,6 +30,20 @@ $(function() {
     //https://nostalgic-apparatus.glitch.me/imagasearch/cats
     $.get('/imagasearch/' + query + '?offset=10', function(objs) {
       fill(objs);
+    })
+    .done(function() {
+      //alert( "second success" );
+    })
+    .fail(function() {
+      alert( "error" );
+    })
+    .always(function() {
+      alert( "finished" );
+    });
+    
+    $('img').on('load', function() {
+      // do whatever you want
+      alert('finish')
     });
   });
 
