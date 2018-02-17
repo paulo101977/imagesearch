@@ -24,23 +24,34 @@
         <h1 class="display-4">Image Search</h1>
       </div>
 
-      <div class="row">
-        <p>Find a image:</p>
-        <form>
+      <!-- panel -->
+      <div class="card">
+        <div class="card-body">
+          <!-- header area -->
           <div class="row">
             <div class="col">
-              <input type="text" class="form-control" placeholder="First name">
+              <form>
+                <div class="form-group">
+                  <label for="search-input">Find a image:</label>
+                  <input type="text" class="form-control" id="search-input" aria-describedby="search" placeholder="Type a search image">
+                  <small id="emailHelp" class="form-text text-muted">Your make search again and again!</small>
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
             </div>
+            
             <div class="col">
-              <input type="text" class="form-control" placeholder="Last name">
+              
             </div>
           </div>
-          <input type="text" maxlength="100" placeholder="Fill with your search!">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-        
-
+          
+          <!-- res
+        </div>
       </div>
+    
       
       <!-- render objects -->
       <div class="row row-eq-height align-items-start" id="results"></div>
