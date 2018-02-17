@@ -69,9 +69,20 @@ app.get("/imagasearch/:img",function(req, res, next){
         //shuffle
         collection.sort(function() { return 0.5 - Math.random() })
         
+        var query = { 'searched': img },
+            update = { 'searched': img , date: new Date() },
+            options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+        
         console.log('before find')
         
-        Recents.update({ 'searched': img }, {upsert: true}, function (err) { console.log(err) });
+        //Recents.update({ 'searched': img }, {upsert: true}, function (err) { console.log(err) });
+        
+        Recents.findOneAndUpdate(query, update, options, function(error, result) {
+            if (error) console.log(error);
+            console.log('result' , result)
+            // do something with the document
+        });
         
         Recents.find({},
           function (err, results) {
