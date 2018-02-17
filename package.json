@@ -13,8 +13,7 @@
   "dependencies": {
     "express": "^4.16.2",
     "mongoose": "*",
-    "body-parser": "*",
-    "express-sanitize-escape": "*"
+    "body-parser": "*"
   },
   "engines": {
     "node": "8.x"

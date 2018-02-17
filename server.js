@@ -7,21 +7,14 @@ var app = express();
 var config = require('./config.js');
 var http = require('https');
 var mongoose = require('mongoose');
-var expressSanitized = require('express-sanitize-escape');
 var bodyParser = require('body-parser');
-var expressSanitized = require('express-sanitize-escape');
-var router = express.router();
 
 //Schemas
 var Recents = require('./models/recents.js');
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
 
-app.use(bodyParser.urlencoded);
-app.use(bodyParser.json);
+app.use(bodyParser.urlencoded({ extended: true }));
 
-expressSanitized.sanitizeParams(router, ['id','img']);
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
@@ -115,6 +108,6 @@ function listen () {
 }
 
 function connect () {
-  var options = { useMongoClient: true, keepAlive: 1 };
+  var options = { keepAlive: 1 };
   return mongoose.createConnection(config.uri, options);
 }
