@@ -24,7 +24,7 @@ $(function() {
   });*/
   
   /* test modal */
-  $('#loading').modal('show')
+  //$('#loading').modal('show')
 
   $('form').submit(function(event) {
     event.preventDefault();
@@ -32,13 +32,15 @@ $(function() {
     
     //https://nostalgic-apparatus.glitch.me/imagasearch/cats
     $.get('/imagasearch/' + query + '?offset=10', function(objs) {
+      $('#loading').modal('show')
+      $("<li>)
       fill(objs);
     })
     .done(function() {
       //alert( "second success" );
     })
     .fail(function() {
-      alert( "error" );
+      $('#loading').modal('hide')
     })
     .always(function() {
       //alert( "finished" );
@@ -52,6 +54,7 @@ $(function() {
     $(window).load(function() {
       // this will fire after the entire page is loaded, including images
       console.log('loaded all images')
+      $('#loading').modal('hide')
     });
   });
 
