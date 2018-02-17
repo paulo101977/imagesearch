@@ -6,17 +6,21 @@
 
 var w = '<div class="w-100"></div>';
 
+function fill(objs){
+  $('#results').empty();
+    objs.forEach(function(obj, index) {
+      var widthComp = index % 2 == 0 ? w : ''
+      $(widthComp + '<div class="col-sm-6">'
+          + '<img src="' + obj.link + '" class="img-fluid" />' 
+        + '</div>').appendTo('#results');
+    });
+}
+
 $(function() {
   console.log('hello world :o');
   
   $.get('/imagasearch/cats?offset=10', function(objs) {
-    $('#results').empty();
-    objs.forEach(function(obj,) {
-      console.log('object',obj.link)
-      $('<div class="col-4">'
-          + '<img src="' + obj.link + '" class="img-fluid" />' 
-        + '</div>').appendTo('#results');
-    });
+    fill(objs);
   });
 
   $('form').submit(function(event) {
@@ -25,13 +29,7 @@ $(function() {
     
     //https://nostalgic-apparatus.glitch.me/imagasearch/cats
     $.get('/imagasearch/' + query + '?offset=10', function(objs) {
-      $('#results').empty();
-      objs.forEach(function(obj) {
-        console.log('object',obj.link)
-        $('<div class="col-4">'
-            + '<img src="' + obj.link + '" class="img-fluid" />' 
-          + '</div>').appendTo('#results');
-      });
+      fill(objs);
     });
   });
 
