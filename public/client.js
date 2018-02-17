@@ -5,6 +5,7 @@
 // add other scripts at the bottom of index.html
 
 var w = '<div class="w-100"></div>';
+var counter = 0;
 
 function fill(objs){
   $('#results').empty();
@@ -15,6 +16,17 @@ function fill(objs){
         + '</div>').appendTo('#results');
     });
 }
+
+function imageLoaded() {
+   // function to invoke for loaded image
+   // decrement the counter
+   counter--; 
+   if( counter === 0 ) {
+       // counter is 0 which means the last
+       //    one loaded, so do something else
+   }
+}
+
 
 function search(query){
    //https://nostalgic-apparatus.glitch.me/imagasearch/cats
@@ -32,7 +44,7 @@ function search(query){
     })
     .always(function() {
       //alert( "finished" );
-      
+      $("img").on("load")
     }); 
 }
 
@@ -50,26 +62,7 @@ $(function() {
       })
   })
   
-  function imageLoaded() {
-     // function to invoke for loaded image
-     // decrement the counter
-     counter--; 
-     if( counter === 0 ) {
-         // counter is 0 which means the last
-         //    one loaded, so do something else
-       console.log('all images loaded')
-     }
-  }
-  var images = $('img');
-  var counter = images.length;  // initialize the counter
 
-  images.each(function() {
-      if( this.complete ) {
-          imageLoaded.call( this );
-      } else {
-          $(this).one('load', imageLoaded);
-      }
-  });
 
   $('form').submit(function(event) {
     event.preventDefault();
