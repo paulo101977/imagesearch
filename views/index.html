@@ -27,11 +27,23 @@
       <div class="row">
         <p>Find a image:</p>
         <form>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="First name">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Last name">
+            </div>
+          </div>
           <input type="text" maxlength="100" placeholder="Fill with your search!">
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        
+
       </div>
-      <div class="rows align-items-start" id="results"></div>
+      
+      <!-- render objects -->
+      <div class="row row-eq-height align-items-start" id="results"></div>
     </div>
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
