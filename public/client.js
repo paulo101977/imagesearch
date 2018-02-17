@@ -33,7 +33,6 @@ $(function() {
     //https://nostalgic-apparatus.glitch.me/imagasearch/cats
     $.get('/imagasearch/' + query + '?offset=10', function(objs) {
       $('#loading').modal('show')
-      $("<li>)
       fill(objs);
     })
     .done(function() {
@@ -41,9 +40,11 @@ $(function() {
     })
     .fail(function() {
       $('#loading').modal('hide')
+      $('<li><span class="text-danger">' + query + ' fail at loading images!</span></li>').appendTo("#result-list")
     })
     .always(function() {
       //alert( "finished" );
+      $('<li>' + query + '</li>').appendTo("#result-list")
     });
     
     $('img').on('load', function() {
@@ -51,11 +52,12 @@ $(function() {
       alert('finish img')
     });
     
-    $(window).load(function() {
-      // this will fire after the entire page is loaded, including images
-      console.log('loaded all images')
-      $('#loading').modal('hide')
-    });
   });
 
+});
+
+$(window).load(function() {
+  // this will fire after the entire page is loaded, including images
+  console.log('loaded all images')
+  $('#loading').modal('hide')
 });
