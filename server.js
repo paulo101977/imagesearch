@@ -73,30 +73,14 @@ app.get("/imagasearch/:img",function(req, res, next){
             update = { 'searched': img , date: new Date() },
             options = { upsert: true, new: true, setDefaultsOnInsert: true };
         
-        
-        var doc = new Recents({searched:img})
-        
-        console.log('doc', doc);
-
-        
-        console.log('before find', Recents)
-        
-        //Recents.update({ 'searched': img }, {upsert: true}, function (err) { console.log(err) });
-        
-        Recents.findOneAndUpdate(query, update, options, function(error, result) {
-            if (error) console.log(error);
-            console.log('result' , result)
-            // do something with the document
+        Recents.create({searched:img}, function(err, doc) {
+          // At this point the jobs collection is created.
+          console.log(err,doc);
+          res.json(collection);
         });
         
-        Recents.find({},
-          function (err, results) {
-              if (err) {  console.log(err) }
-              console.log('exits')
-              
-          })
         
-        res.json(collection);
+        //res.json(collection);
       })
       
     })
