@@ -19,25 +19,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   </head>
   <body>
-    <header>
+    <div class="container">
       <div class="jumbotron">
         <h1 class="display-4">Image Search</h1>
       </div>
-    </header>
 
-    <main>
-      <p>Find a image:</p>
-      <form>
-        <input type="text" maxlength="100" placeholder="Fill with your search!">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      <section class="dreams">
-        <ul id="dreams">
-        </ul>
-      </section>
-    </main>
-
-
+      <div class="row">
+        <p>Find a image:</p>
+        <form>
+          <input type="text" maxlength="100" placeholder="Fill with your search!">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="rows" id="results"></div>
+    </div>
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
