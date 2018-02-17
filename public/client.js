@@ -20,12 +20,13 @@ function fill(objs){
 function imageLoaded() {
    // function to invoke for loaded image
    // decrement the counter
-    console.error("call imageLoaded")
+   console.error("call imageLoaded", counter)
    counter--; 
-   if( counter === 0 ) {
+   if( counter <= 0 ) {
        // counter is 0 which means the last
        //    one loaded, so do something else
-     console.error("all loaded")
+     //console.error("all loaded")
+     $('#loading').modal('hide')
    }
 }
 
@@ -48,6 +49,7 @@ function search(query){
       //alert( "finished" );
       
       var images = $("img.img-fluid");
+      counter = images.length;
       
       console.log('img',images)
       

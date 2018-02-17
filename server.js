@@ -69,9 +69,11 @@ app.get("/imagasearch/:img",function(req, res, next){
         var collection = [];
         data.forEach(function(item){
           //limit the image size
-          if(item.is_album && item.size < 50000){
+          if(item.is_album){
             item.images.forEach(function(nItem){
-              collection.push(nItem)
+              if(nItem.size < 400000){
+                collection.push(nItem)
+              }
             })
           }
         })
