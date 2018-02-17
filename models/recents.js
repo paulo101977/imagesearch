@@ -7,6 +7,6 @@ var RecentsSchema = new Schema({
 });
 
 
-var Recents = mongoose.model('Recents', RecentsSchema);
-
-module.exports = Recents;
+module.exports = function(db){
+  return db.model('Recents', RecentsSchema);
+};

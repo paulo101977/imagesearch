@@ -8,11 +8,8 @@ var config = require('./config.js');
 var http = require('https');
 var mongoose = require('mongoose');
 
-
 //Schemas
 var Recents = require('./models/recents.js');
-
-
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
@@ -69,18 +66,16 @@ app.get("/imagasearch/:img",function(req, res, next){
         //shuffle
         collection.sort(function() { return 0.5 - Math.random() })
         
-        var query = { 'searched': img },
-            update = { 'searched': img , date: new Date() },
-            options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        //connect to db
+        var Rec = Recents(db);
         
-        Recents.create({searched:img}, function(err, doc) {
+        Rec.create({searched:img}, function(err, doc) {
           // At this point the jobs collection is created.
           console.log(err,doc);
-          res.json(collection);
         });
         
         
-        //res.json(collection);
+        res.json(collection);
       })
       
     })
@@ -97,7 +92,7 @@ app.get("/imagasearch/:img",function(req, res, next){
 
 
 //mongoose connect
-connect()
+var db = connect()
   .on('error', console.log)
   .on('disconnected', connect)
   .once('open', listen);
