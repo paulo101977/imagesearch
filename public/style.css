@@ -9,7 +9,7 @@
 }
 
 .modal.show{
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content:center;
 }
@@ -45,4 +45,5 @@ img {
   top: 0px;
   right: 0px;
   margin-top: -25px;
+  margin-right: -25px;
 }

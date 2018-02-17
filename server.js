@@ -35,8 +35,9 @@ app.get("/imagasearch/:img",function(req, res, next){
   };
   
   if(img){
-    options.path += '?q=' + img; 
-  
+    
+    var img_escaped = img.split(' ').join('+');
+    options.path += '?q=' + img_escaped; 
     
     var bodyChunks = [];
 
