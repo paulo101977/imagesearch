@@ -24,6 +24,10 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 
+app.get("/recents",function(req, res, next){
+  
+})
+
 //https://api.imgur.com/3/gallery/search/?q=cats
 app.get("/imagasearch/:img",function(req, res, next){
   let img = req.params.img;

@@ -19,12 +19,26 @@ function fill(objs){
 $(function() {
   console.log('hello world :o');
   
-  /*$.get('/imagasearch/cats?offset=10', function(objs) {
-    fill(objs);
-  });*/
-  
-  /* test modal */
-  //$('#loading').modal('show')
+  function imageLoaded() {
+     // function to invoke for loaded image
+     // decrement the counter
+     counter--; 
+     if( counter === 0 ) {
+         // counter is 0 which means the last
+         //    one loaded, so do something else
+       console.log('all images loaded')
+     }
+  }
+  var images = $('img');
+  var counter = images.length;  // initialize the counter
+
+  images.each(function() {
+      if( this.complete ) {
+          imageLoaded.call( this );
+      } else {
+          $(this).one('load', imageLoaded);
+      }
+  });
 
   $('form').submit(function(event) {
     event.preventDefault();
@@ -41,17 +55,13 @@ $(function() {
     })
     .fail(function() {
       $('#loading').modal('hide')
-      $('<li><span class="text-danger">' + query + ' fail at loading images!</span></li>').appendTo("#result-list")
+      $('<li class="list-group-item"><span class="text-danger">' + query + ' fail at loading images!</span></li>').appendTo("#result-list")
     })
     .always(function() {
       //alert( "finished" );
-      $('<li>' + query + '</li>').appendTo("#result-list")
+      $('<li class="list-group-item">' + query + '</li>').appendTo("#result-list")
     });
     
-    $('img').on('load', function() {
-      // do whatever you want
-      alert('finish img')
-    });
     
   });
 
