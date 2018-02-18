@@ -7,6 +7,14 @@
 var w = '<div class="w-100"></div>';
 var counter = 0;
 
+function getCookie(cname) {
+    return $.coockie(cname)
+}
+
+function saveCookie(cname, data){
+  return $.coockie(cname, JSON.stringify(data) , { path: '/admin', expires: 7 })
+}
+
 function fill(objs){
   $('#results').empty();
     objs.forEach(function(obj, index) {
