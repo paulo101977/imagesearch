@@ -9,8 +9,6 @@ var http = require('https');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
-//Schemas
-var Recents = require('./models/recents.js');
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,17 +22,7 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 
-app.get("/recents",function(req, res, next){
-  var Rec = Recents(db);
-        
-  Rec.find({}, function(err, docs) {
-    // At this point the jobs collection is created.
-    console.log(err, docs);
-    if(err) next();
-    
-    res.json(docs);
-  }).sort({'date': -1}).limit(3);
-})
+
 
 //https://api.imgur.com/3/gallery/search/?q=cats
 app.get("/imagasearch/:img",function(req, res, next){
@@ -85,15 +73,7 @@ app.get("/imagasearch/:img",function(req, res, next){
         //shuffle
         collection.sort(function() { return 0.5 - Math.random() })
         
-        //connect to db
-        var Rec = Recents(db);
-        
-        Rec.create({searched:img}, function(err, doc) {
-          // At this point the jobs collection is created.
-          console.log(err,doc);
-        });
-        
-        
+       
         res.json(collection);
       })
       
@@ -110,20 +90,7 @@ app.get("/imagasearch/:img",function(req, res, next){
 })
 
 
-//mongoose connect
-var db = connect()
-  .on('error', console.log)
-  .on('disconnected', connect)
-  .once('open', listen);
 
+app.listen(process.env.PORT);
+console.log('Express app started on port ' + process.env.PORT);
 
-
-function listen () {
-  app.listen(process.env.PORT);
-  console.log('Express app started on port ' + process.env.PORT);
-}
-
-function connect () {
-  var options = { keepAlive: 1 };
-  return mongoose.createConnection(config.uri, options);
-}

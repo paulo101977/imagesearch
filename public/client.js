@@ -60,14 +60,15 @@ function search(query){
       var data = [];
       console.log('recents', recents)
       if(!recents){
-        data.push({query: query, date: new Date()})
+        data.unshift({query: query, date: new Date()})
         saveCookie('recents',data)
       } else {
-        recents = JSON.parse(recents);
+        recents = typeof recents === 'string' ? JSON.parse(recents) : recents;
         if(recents.length > 3){
           recents.pop();
         }
         recents.push({query: query, date: new Date()})
+        sortRecentsByDate(recents);
         updateRecentsScreen(recents);
         saveCookie('recents', recents)
       }
