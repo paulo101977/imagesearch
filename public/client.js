@@ -59,7 +59,9 @@ function search(query){
         if(recents.length > 3){
           recents.shift();
         }
-        rec
+        recents.push({query: query, date: new Date()})
+        updateRecentsScreen(recents);
+        saveCookie('recents', recents)
       }
     })
     .fail(function() {
@@ -88,6 +90,16 @@ function makeSearch(query){
   search(query)
 }
 
+function updateRecentsScreen(recents){
+   if(recents){
+     console.log(recents)
+     JSON.parse(recents).forEach(function(item){
+        $('<a onClick="makeSearch(\'' + item.query  + '\')" class="list-group-item list-group-item-action">' + item.query + '</a>')
+          .appendTo("#result-list")
+    }) 
+  } 
+}
+
 $(function() {
   console.log('hello world :o');
   
@@ -96,11 +108,7 @@ $(function() {
   var recents = getCookie('recents');
   console.log('recents', recents)
   
-  if(recents){
-     JSON.parse(recents).forEach(function(item){
-        $('<a onClick="makeSearch(\'' + item.query  + '\')" class="list-group-item list-group-item-action">' + item.query + '</a>').appendTo("#result-list")
-    }) 
-  }
+  updateRecentsScreen(recents);
 
 
   $('form').submit(function(event) {
