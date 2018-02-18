@@ -8,10 +8,13 @@ var w = '<div class="w-100"></div>';
 var counter = 0;
 
 function getCookie(cname) {
-    return Cookies.get(cname)
+    var recents = Cookies.get(cname);
+    var parsed = recents ? JSON.parse(recents) : []
+    return parsed
 }
 
 function saveCookie(cname, data){
+  sortRecentsByDate(data)
   return Cookies.set(cname, JSON.stringify(data) , { path: '/', expires: 7 })
 }
 
@@ -38,6 +41,11 @@ function imageLoaded() {
    }
 }
 
+function sortRecentsByDate(recents){
+  recents.sort(function(a,b){
+    return new Date(b.date) - new Date(a.date);
+  });
+}
 
 function search(query){
    //https://nostalgic-apparatus.glitch.me/imagasearch/cats
@@ -57,7 +65,7 @@ function search(query){
       } else {
         recents = JSON.parse(recents);
         if(recents.length > 3){
-          recents.shift();
+          recents.pop();
         }
         recents.push({query: query, date: new Date()})
         updateRecentsScreen(recents);
@@ -91,9 +99,11 @@ function makeSearch(query){
 }
 
 function updateRecentsScreen(recents){
+  $("#result-list").empty();
+   recents = typeof recents === 'string' ? JSON.parse(recents) : recents;
    if(recents){
      console.log(recents)
-     JSON.parse(recents).forEach(function(item){
+     recents.forEach(function(item){
         $('<a onClick="makeSearch(\'' + item.query  + '\')" class="list-group-item list-group-item-action">' + item.query + '</a>')
           .appendTo("#result-list")
     }) 
@@ -107,7 +117,7 @@ $(function() {
   
   var recents = getCookie('recents');
   console.log('recents', recents)
-  
+  sortRecentsByDate(recents);
   updateRecentsScreen(recents);
 
 
