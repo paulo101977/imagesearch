@@ -7,6 +7,17 @@
 var w = '<div class="w-100"></div>';
 var counter = 0;
 
+function getCookie(cname) {
+    var recents = Cookies.get(cname);
+    var parsed = recents ? JSON.parse(recents) : []
+    return parsed
+}
+
+function saveCookie(cname, data){
+  sortRecentsByDate(data)
+  return Cookies.set(cname, JSON.stringify(data) , { path: '/', expires: 7 })
+}
+
 function fill(objs){
   $('#results').empty();
     objs.forEach(function(obj, index) {
@@ -30,6 +41,11 @@ function imageLoaded() {
    }
 }
 
+function sortRecentsByDate(recents){
+  recents.sort(function(a,b){
+    return new Date(b.date) - new Date(a.date);
+  });
+}
 
 function search(query){
    //https://nostalgic-apparatus.glitch.me/imagasearch/cats
@@ -40,6 +56,22 @@ function search(query){
     })
     .done(function() {
       //alert( "second success" );
+      var recents = getCookie('recents')
+      var data = [];
+      console.log('recents', recents)
+      if(!recents){
+        data.unshift({query: query, date: new Date()})
+        saveCookie('recents',data)
+      } else {
+        recents = typeof recents === 'string' ? JSON.parse(recents) : recents;
+        if(recents.length > 3){
+          recents.pop();
+        }
+        recents.push({query: query, date: new Date()})
+        sortRecentsByDate(recents);
+        updateRecentsScreen(recents);
+        saveCookie('recents', recents)
+      }
     })
     .fail(function() {
       $('#loading').modal('hide')
@@ -67,16 +99,27 @@ function makeSearch(query){
   search(query)
 }
 
+function updateRecentsScreen(recents){
+  $("#result-list").empty();
+   recents = typeof recents === 'string' ? JSON.parse(recents) : recents;
+   if(recents){
+     console.log(recents)
+     recents.forEach(function(item){
+        $('<a onClick="makeSearch(\'' + item.query  + '\')" class="list-group-item list-group-item-action">' + item.query + '</a>')
+          .appendTo("#result-list")
+    }) 
+  } 
+}
+
 $(function() {
   console.log('hello world :o');
   
-  $.get('/recents/', function(objs) {
-      console.log(objs)
-      objs.forEach(function(item){
-        $('<a onClick="makeSearch(\'' + item.searched  + '\')" class="list-group-item list-group-item-action">' + item.searched + '</a>').appendTo("#result-list")
-      })
-  })
   
+  
+  var recents = getCookie('recents');
+  console.log('recents', recents)
+  sortRecentsByDate(recents);
+  updateRecentsScreen(recents);
 
 
   $('form').submit(function(event) {
