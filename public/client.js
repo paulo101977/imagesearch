@@ -8,7 +8,7 @@ var w = '<div class="w-100"></div>';
 var counter = 0;
 
 function getCookie(cname) {
-    return $.coockie(cname)
+    return Cookies.get(cname)
 }
 
 function saveCookie(cname, data){
@@ -84,6 +84,9 @@ $(function() {
         $('<a onClick="makeSearch(\'' + item.searched  + '\')" class="list-group-item list-group-item-action">' + item.searched + '</a>').appendTo("#result-list")
       })
   })
+  
+  var recents = JSON.parse(getCookie('recents'));
+  console.log('recents', recents)
   
 
 
