@@ -12,7 +12,7 @@ function getCookie(cname) {
 }
 
 function saveCookie(cname, data){
-  return $.coockie(cname, JSON.stringify(data) , { path: '/admin', expires: 7 })
+  return Cookies.set(cname, JSON.stringify(data) , { path: '/', expires: 7 })
 }
 
 function fill(objs){
@@ -48,6 +48,19 @@ function search(query){
     })
     .done(function() {
       //alert( "second success" );
+      var recents = getCookie('recents')
+      var data = [];
+      console.log('recents', recents)
+      if(!recents){
+        data.push({query: query, date: new Date()})
+        saveCookie('recents',data)
+      } else {
+        recents = JSON.parse(recents);
+        if(recents.length > 3){
+          recents.shift();
+        }
+        rec
+      }
     })
     .fail(function() {
       $('#loading').modal('hide')
@@ -78,16 +91,16 @@ function makeSearch(query){
 $(function() {
   console.log('hello world :o');
   
-  $.get('/recents/', function(objs) {
-      console.log(objs)
-      objs.forEach(function(item){
-        $('<a onClick="makeSearch(\'' + item.searched  + '\')" class="list-group-item list-group-item-action">' + item.searched + '</a>').appendTo("#result-list")
-      })
-  })
   
-  var recents = JSON.parse(getCookie('recents'));
+  
+  var recents = getCookie('recents');
   console.log('recents', recents)
   
+  if(recents){
+     JSON.parse(recents).forEach(function(item){
+        $('<a onClick="makeSearch(\'' + item.query  + '\')" class="list-group-item list-group-item-action">' + item.query + '</a>').appendTo("#result-list")
+    }) 
+  }
 
 
   $('form').submit(function(event) {
